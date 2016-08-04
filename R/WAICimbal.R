@@ -1,0 +1,13 @@
+#' @export
+WAICimbal <-
+function(alloc,xmat,carwt) {
+   # evaluate covariate imbalance for each factor level of each covariate
+   # returns vector of AIC(j) for each column of xmat
+   
+   cov_diff = apply(xmat,2,cov_diff_fcn,alloc)
+   crossprod(cov_diff,carwt)/2
+}
+
+cov_diff_fcn = function(xvec,alloc) {  
+   sum (tapply(alloc,xvec, function(y) {abs(mean(2*y - 1))} ) )
+}
